@@ -1,0 +1,10 @@
+.DS_Store
+.env
+composer.lock
+.php_cs
+.php_cs.cache
+.phpunit.result.cache
+
+.idea/
+tests/_temp
+vendor
