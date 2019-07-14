@@ -3,10 +3,12 @@
 namespace Squadron\Tests;
 
 use Dotenv\Dotenv;
+use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as Orchestra;
 use ReflectionClass;
 use ReflectionException;
+use Squadron\Base\Exceptions\Handler;
 
 abstract class TestCase extends Orchestra
 {
@@ -15,6 +17,8 @@ abstract class TestCase extends Orchestra
         $this->loadEnvironmentVariables();
 
         parent::setUp();
+
+        app()->singleton(ExceptionHandler::class, Handler::class);
     }
 
     private function loadEnvironmentVariables(): void
@@ -93,6 +97,11 @@ abstract class TestCase extends Orchestra
         $method->setAccessible(true);
 
         return $method->invokeArgs($obj, $args);
+    }
+
+    protected function actingAsRole(string $role)
+    {
+        return $this->actingAs(new TestUser($role), 'api');
     }
 
     abstract protected function getServiceProviders(): array;
