@@ -23,12 +23,12 @@ abstract class TestCase extends Orchestra
 
     private function loadEnvironmentVariables(): void
     {
-        if (! file_exists(__DIR__.'/../.env'))
+        if (! file_exists(__DIR__.'/../../../../.env'))
         {
             return;
         }
 
-        Dotenv::create(__DIR__.'/..')->load();
+        Dotenv::create(__DIR__.'/../../../..')->load();
     }
 
     /**
